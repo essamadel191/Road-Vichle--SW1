@@ -43,9 +43,9 @@ class Mechanics extends User_parent {
             return false;
     }
     // not finished yet
-    public function view_request($user){
-        $result=array();
-        $result=$this->Mechanics_queries->View_Request($user);
+    public function view_request(){
+        
+        $result=$this->Mechanics_queries->View_Request();
         return $result;
     }
     public function Accept_request($user){
@@ -74,5 +74,5 @@ class Mechanics extends User_parent {
 }
 
 $a=new Mechanics();
-$a->set_username("MOMO1000");
-$a->Rejected_request($a);
+
+$a->Send_feedback(26, "holla Every one");

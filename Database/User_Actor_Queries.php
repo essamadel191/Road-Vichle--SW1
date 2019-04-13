@@ -50,6 +50,21 @@ class User_Actor_Queries {
        }
     }
     
+    public function search_mechanics($location){
+       
+       $query="SELECT * FROM mec_location WHERE Location='$location' limit 1";
+       $result= $this->Db->database_query($query);
+       $q= $this->Db->database_all_assoc($result);
+        if (false === $q) {
+          echo mysqli_error();
+        }  
+        
+        return $q;
+       
+      
+        
+    }
+    
     
     
 }

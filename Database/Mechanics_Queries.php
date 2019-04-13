@@ -36,9 +36,10 @@ class Mechanics_Queries {
      }     
     }
     
-    public function View_Request($user) {
-        $a=$user->get_username();
-        $q="SELECT name_u,request from `request` where name_m=$a";
+    public function View_Request() {
+        
+     
+        $q="SELECT name_u, request from `request`";
         $result= $this->Db->database_query($q);
         $query= $this->Db->database_all_assoc($result);
         return $query;

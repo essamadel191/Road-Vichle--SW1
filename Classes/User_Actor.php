@@ -56,22 +56,22 @@ class User_Actor extends User_parent {
         }
     }
     
+    public function search_mechanic($location){
+       
+        $re=$this->User_Actot_queries->search_mechanics($location);
+        return $re;
+        
+    }
     
 }
 
+
+
+
 $user=new User_Actor();
-$user->set_username("KOKO90");
-$user->setRequest("Iwanna fix my car");
-
-
-
-$user2=new Mechanics();
-$user2->set_username("MOMO1000");
-$user->sendRequest($user,$user2);
-
-echo '<br>';
-//$user=new User_parent($id="");
-//$user->set_fname("jack");
+$user->search_mechanic("Giza");
+$u=$user->search_mechanic("Giza");
+var_dump($u);
 //$user->set_lname("karly");
 //$user->set_email("jack.com");
 //$user->set_password("0000");

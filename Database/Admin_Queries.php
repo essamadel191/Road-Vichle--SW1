@@ -20,7 +20,6 @@ class Admin_Queries {
     }
     public function  addUser($user){
      $data= array();
-     $data=array();
      $data['fname']=$user->get_name();
      $data['lname']=$user->get_lname();
      $data['email']=$user->get_email();
@@ -70,12 +69,8 @@ public function View_feedback(){
      return false; 
 }
 
-public function Block_mechanic($user){
-    $data=array();
-    $data['users_id']=$user->get_user_type()->id;
-    $data['username']=$user->get_username();
-    $data['state']=0;
-    $query= $this->Db->update('mechanics_state', $data);
+public function Block_mechanic($username){
+    $query="UPDATE mechanics_state SET state = 0 WHERE username ='$username' limit 1";
     $r= $this->Db->database_query($query);
     if($r){
         return True;
@@ -85,14 +80,24 @@ public function Block_mechanic($user){
 }
 
 
-public function Allow_mechanic($user){
-    $data=array();
-    $data['state']=1;
-    $result=$this->Db->update("mechanics_state", $data);
+public function Allow_mechanic($username){
+   $query="UPDATE mechanics_state SET state = 1 WHERE username ='$username' limit 1";
+    $result= $this->Db->database_query($query);
     if($result){
         return true;
     }else
         return false;
+}
+
+public function deleteUser($query)
+{
+        $result = $this->Db->delete($query);
+             if($result){
+       return TRUE;
+      }
+     else{
+       return False;
+    }
 }
 
 
@@ -111,11 +116,24 @@ public function insert_mechanic_into_mechanics_state_table($user){
         }
     }
     
+    
+    
+    public function Search_users($username){
+        
+       $query="SELECT username,email,fname,lname from users where username='$username' limit 1";
+       $result= $this->Db->database_query($query);
+        $q= $this->Db->database_all_assoc($result);
+        if (false === $q) {
+          echo mysqli_error();
+        }  
+        
+        return $q;
+       
+    }
+    
+    
+    
+    
 }
     
-    
-    
-    
-    
-
     

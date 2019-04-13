@@ -14,6 +14,7 @@
 
 include_once '../Database/Admin_Queries.php';
 include_once '../Classes/User_parent.php';
+include_once '../Classes/Mechanics.php';
 class Admin extends User_parent{
     private $Admin_Queries;
     private $mechanic_state;
@@ -21,10 +22,19 @@ class Admin extends User_parent{
     $this->Admin_Queries=new Admin_Queries();
        
     }
-    function AddUser($user){
+    function AddMechanics($user){
         $result= $this->Admin_Queries->addUser($user);
         $res=$this->Admin_Queries->insert_mechanic_into_mechanics_state_table($user);
         if($result&&$res)
+            return TRUE;
+        else
+            return False;
+    }
+    
+     function AddUser($user){
+        $result= $this->Admin_Queries->addUser($user);
+        
+        if($result)
             return TRUE;
         else
             return False;
@@ -47,16 +57,17 @@ class Admin extends User_parent{
        return $data;
     }
     
-    public function block_mechanic($user){
-        $result=$this->Admin_Queries->Block_mechanic($user);
+    public function block_mechanic($username){
+        $result=$this->Admin_Queries->Block_mechanic($username);
         if($result){
             return true;
         } else {
             return false;    
         }
     }
-    public function allow_mechanics($user){
-        $res=$this->Admin_Queries->Allow_mechanic($user);
+    
+    public function allow_mechanics($username){
+        $res=$this->Admin_Queries->Allow_mechanic($username);
         if($res){
             return TRUE;
         } else {
@@ -64,19 +75,42 @@ class Admin extends User_parent{
         }
     }
     
-    
+    public function DeleteUser($query) {
+            $result = $this->Admin_Queries->deleteUser($query);
+            if ($result) {
+            return TRUE;
+        } else {
+            return False;
+        }
+
+        }
+        
+        
+        
+        public function search_users($username){
+          
+            $data= $this->Admin_Queries->Search_users($username);
+            return $data;
+            
+        }
+        
     
     }
-$user=new User_parent($id="");
-$user->set_fname("Ali");
-$user->set_lname("Ashraf");
-$user->set_email("Ali.com");
-$user->set_password("0000");
-$user->set_username("Ali90");
-$user->set_user_type(2);       
-$a=new Admin();
-$r=$a->allow_mechanics($user);
 
-if($r){
-    echo 'ok';
-}
+
+    
+    $admin=new Admin();
+//    $admin->set_fname("Diaa");
+//    $admin->set_lname("Ahmed");
+//    $admin->set_email("Diaa.com");
+//    $admin->set_password("156");
+//    $admin->set_username("DIAA");
+//    $admin->set_user_type(3);
+//    $admin->AddUser($admin);
+////    $data=$admin->view_mechanics();
+//    $data=$admin->viewusers();
+//    $data=$admin->search_users("Omessi");
+// $admin->DeleteUser("");
+    
+   
+    var_dump($admin->view_feedback());

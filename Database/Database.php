@@ -61,7 +61,7 @@ class Database {
     
     public function database_query($database_query) {
         $this->encode();
-        $query_result = mysqli_query($this->database_connection,$database_query);
+        @$query_result = mysqli_query($this->database_connection,$database_query);
         return $query_result;
     }
     
@@ -91,7 +91,7 @@ class Database {
     
     public function database_all_assoc($database_result) {
          $array_return=array();
-        while ($row = mysqli_fetch_assoc($database_result)) {
+       while ($row = @mysqli_fetch_assoc($database_result)) {
             $array_return[] = $row;
         }
         return $array_return;
