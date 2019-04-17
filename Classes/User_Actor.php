@@ -12,14 +12,16 @@
  * @author omar
  */
 include_once '../Classes/Admin.php';
-
 include_once '../Classes/Mechanics.php';
 include_once '../Classes/User_parent.php';
 include_once '../Database/User_Actor_Queries.php';
+include_once '../mail/mail.php';
 class User_Actor extends User_parent {
     private $request;
     private $User_Actot_queries;
+    private $sendfeedback;
 
+    
     public  function __construct() {
         $this->User_Actot_queries=new User_Actor_Queries();
      
@@ -31,8 +33,18 @@ class User_Actor extends User_parent {
         return $this->sendfeedback;
     }
     
-    public function Send_feedback($id,$feedback){
-        $r=$this->User_Actot_queries->Send_feedback($id, $feedback);
+    
+     function AddUser($user){
+        $result= $this->User_Actot_queries->addUser($user);
+        SendEmail($user->get_email());
+        if($result)
+            return TRUE;
+        else
+            return False;
+    }
+    
+    public function Send_feedback($user){
+        $r=$this->User_Actot_queries->Send_feedback($user);
         if($r){
             return TRUE;
         }
@@ -66,15 +78,6 @@ class User_Actor extends User_parent {
 }
 
 
-
-
-$user=new User_Actor();
-$user->search_mechanic("Giza");
-$u=$user->search_mechanic("Giza");
-var_dump($u);
-//$user->set_lname("karly");
-//$user->set_email("jack.com");
-//$user->set_password("0000");
-//$user->set_username("JackNN");
-//$user->set_user_type(2);
-
+//$user=new User_Actor();
+////$user->set_sendfeedback("Weird");
+//var_dump($user->search_mechanic("Giza"));

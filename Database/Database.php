@@ -17,13 +17,22 @@ class Database {
     private $password="";
      private $db_name="project_db";
     private  $database_connection; // 
-    
-     public function __construct() {
-      $this->database_connection = $this->database_connect($this->host, $this->username,
-      $this->password);
+    private static $instance=null;
+    private  function __construct() {
+      $this->database_connection = $this->database_connect($this->host, $this->username,$this->password);
       $this->database_select($this->db_name);
       
     }
+   public static function getInstance()
+    {
+       if(!isset(self::$instance))
+        {
+            self::$instance = new Database();
+        }
+        return self::$instance;
+
+    }
+
  
     
     private function database_connect($database_host, $database_username, $database_password) {

@@ -17,7 +17,7 @@ include_once '../Database/Database.php';
 class User_type_queries {
     private $Db;
     public function __construct() {
-        $this->Db=new Database(); 
+        $this->Db= Database::getInstance(); 
     }
     public function  get_user_by_id($id){
         $Query="SELECT * FROM `user_tpe`  where type_id=$id";

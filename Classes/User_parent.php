@@ -33,7 +33,7 @@ class User_parent {
             $this->password=$user_data['password'];
             $this->username=$user_data['username'];
             $this->user_type=new User_type($user_data['user_type_id']);
-                    
+            $this->id=$user_data['id'];        
             
         }
     }
@@ -79,7 +79,8 @@ class User_parent {
         return $this->user_type;
     }
             
- 
+    
+
     public function login(){
         $user_data=$this->User_Queries->get_user_by_username_password($this->username,$this->password);
         if($user_data){

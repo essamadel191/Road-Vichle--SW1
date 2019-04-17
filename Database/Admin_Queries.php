@@ -16,9 +16,13 @@ include '../Database/Database.php';
 class Admin_Queries {
     private  $Db;
      function __construct(){
-       $this->Db=new Database();
+       $this->Db= Database::getInstance();
     }
-    public function  addUser($user){
+   
+    
+   
+    
+    public function  AddAdmin($user){
      $data= array();
      $data['fname']=$user->get_name();
      $data['lname']=$user->get_lname();
@@ -32,10 +36,8 @@ class Admin_Queries {
       }
      else{
        return False;
-    }
-}
-
-public function ViewUsers(){
+    }}
+    public function ViewUsers(){
         $query="SELECT * from `users` where user_type_id= 3 ";
        $result= $this->Db->database_query($query);
       $q= $this->Db->database_all_assoc($result);
@@ -44,9 +46,9 @@ public function ViewUsers(){
     } else {
         return FALSE;
     }
-}
+    }
 
-public function ViewMechanic(){
+    public function ViewMechanic(){
     $query="SELECT * from `users` where user_type_id= 2";
     $result= $this->Db->database_query($query);
     $q= $this->Db->database_all_assoc($result);
@@ -56,66 +58,39 @@ public function ViewMechanic(){
         return false;    
     }
     
-}
+    }
 
-public function View_feedback(){
-    $query="SELECT users.username, feedback.Feedback FROM users INNER JOIN staff ON users.id = feedback.users_id ";
- $result= $this->Db->database_query($query);
- $re= $this->Db->database_all_assoc($result);
- if($re){
+    public function View_feedback(){
+     $query="SELECT users.username, feedback.Feedback FROM users INNER JOIN feedback ON users.id = feedback.users_id ";
+     $result= $this->Db->database_query($query);
+     $re= $this->Db->database_all_assoc($result);
+     if($re){
      return $re;
- }
- else
+    } 
+     else
      return false; 
-}
+    } 
 
-public function Block_mechanic($username){
-    $query="UPDATE mechanics_state SET state = 0 WHERE username ='$username' limit 1";
+    public function Block_mechanic($username){
+    $query="UPDATE mechanic_state SET state = 0 WHERE username ='$username' limit 1";
     $r= $this->Db->database_query($query);
     if($r){
         return True;
     } else {
         return FALSE;    
     }
-}
+    }
 
 
-public function Allow_mechanic($username){
-   $query="UPDATE mechanics_state SET state = 1 WHERE username ='$username' limit 1";
-    $result= $this->Db->database_query($query);
-    if($result){
+    public function Allow_mechanic($username){
+     $query="UPDATE mechanic_state SET state = 1 WHERE username ='$username' limit 1";
+     $result= $this->Db->database_query($query);
+     if($result){
         return true;
-    }else
+     }else
         return false;
-}
-
-public function deleteUser($query)
-{
-        $result = $this->Db->delete($query);
-             if($result){
-       return TRUE;
-      }
-     else{
-       return False;
     }
-}
 
-
-
-public function insert_mechanic_into_mechanics_state_table($user){
-        $data=array();
-        $data['users_id']=$user->get_user_type()->id;
-        $data['username']=$user->get_username();
-        $data['state']=1;
-        $res= $this->Db->insert("mechanics_state", $data);
-        $query= $this->Db->database_query($res);
-        if($query){
-            return true;
-        } else {
-            return false;    
-        }
-    }
-    
     
     
     public function Search_users($username){
@@ -135,5 +110,4 @@ public function insert_mechanic_into_mechanics_state_table($user){
     
     
 }
-    
     

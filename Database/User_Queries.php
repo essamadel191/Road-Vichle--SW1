@@ -16,7 +16,7 @@ include_once '../Database/DataBase.php';
 class User_Queries {
     private $Db;
     public function __construct() {
-        $this->Db=new Database();
+        $this->Db= Database::getInstance();
     }
     
     public function get_users_by_username_password($username,$pass){

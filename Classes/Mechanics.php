@@ -1,4 +1,4 @@
-<?php
+<?php //
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,6 +13,7 @@
  */
 include_once '../Classes/User_parent.php';
 include_once '../Database/Mechanics_Queries.php';
+
 class Mechanics extends User_parent {
     private $Mechanics_queries;
     private $location;
@@ -33,9 +34,23 @@ class Mechanics extends User_parent {
     public function __construct() {
         $this->Mechanics_queries=new Mechanics_Queries();
     }
+    function AddMechanics($user){
+        $result= $this->Mechanics_queries->AddMechanic($user);
+        $res=$this->Mechanics_queries->insert_mechanic_into_mechanics_state_table($user);
+        $r=$this->Mechanics_queries->insert_into_mech_location($user);
+        SendEmail($user->get_email());
+        //SendEmail($user->get_email());
+        //$email=$user->get_email();
+       
+        if($result&$res)
+            return TRUE;
+        else
+            return False;
+    }
     
-    public function Send_feedback($id,$feedback){
-        $r=$this->Mechanics_queries->Send_feedback($id, $feedback);
+    
+    public function Send_feedback($user){
+        $r=$this->Mechanics_queries->Send_feedback($user);
         if($r){
             return TRUE;
         }
@@ -43,9 +58,9 @@ class Mechanics extends User_parent {
             return false;
     }
     // not finished yet
-    public function view_request(){
+    public function view_request($user){
         
-        $result=$this->Mechanics_queries->View_Request();
+        $result=$this->Mechanics_queries->View_Request($user);
         return $result;
     }
     public function Accept_request($user){
@@ -66,13 +81,24 @@ class Mechanics extends User_parent {
     }
     
        
-     
+    
           
     
-    
+    public function get_id_BY_username($user){
+        $r= $this->Mechanics_queries->get_id_By_user_type($user);
+        return $r;
+    }
     
 }
 
-$a=new Mechanics();
 
-$a->Send_feedback(26, "holla Every one");
+//
+//$mech=new Mechanics();
+////$mech->set_lname("NONO");
+////$mech->set_fname("KOKO");
+////$mech->set_email("omessi18@gmail.com");
+////$mech->set_password("149789");
+//$mech->set_username("Ahmed80");
+////$mech->set_user_type(2);
+////$mech->AddMechanics($mech);
+//$mech->Accept_request($mech);
