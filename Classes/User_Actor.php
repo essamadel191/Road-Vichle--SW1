@@ -60,7 +60,7 @@ class User_Actor extends User_parent {
         return $this->request;
     }
     public function sendRequest($user,$mechanic){
-        $result= $this->User_Actot_queries->Send_Request($user, $mechanic);
+        $result= $this->User_Actor_queries->Send_Request($user, $mechanic);
         if($result){
             return true;
         } else {
